@@ -31,25 +31,26 @@ class Node():
             #first node of layer 2 is 'A' + offset=4
             self.node_name = ''.join(['Layer_', str(layer+1), '_', chr((ord('A')) + offset + same_layer )])
 
-    def make_children(self, current_layer, nodes_per_layer_map, nodes_inlayer):
+    def make_children(self, current_layer, nodes_per_layer_map, inLayer_offset):
 
         #when to terminate the recursive call
         if current_layer >= len(nodes_per_layer_map):
             #print("...end...")
             return
-        #needed a varible to keep the number of nodes in each layer
-        nodes_inlayer = NODE_COUNT_PER_LAYER[current_layer]
+        #needed a varible to keep the offset when in the same node
+        inLayer_offset = NODE_COUNT_PER_LAYER[current_layer] - 1
         #create the children for this node --> add to the list
         for i in range(nodes_per_layer_map[current_layer]):
             #print(i, ' --> ', self.node_name)
             #nodes_inlayer = nodes_inlayer + 1
-            self.children.append(Node(current_layer, nodes_inlayer-1) )
-            nodes_inlayer = nodes_inlayer + 1
+            self.children.append(Node(current_layer, inLayer_offset) )
+            print('*nodes in layer', inLayer_offset)
+            inLayer_offset += 1
 
         #first child is the first in the children list
         first_born = self.children[0]
         #connect the first child
-        first_born.make_children(current_layer+1, nodes_per_layer_map, nodes_inlayer)
+        first_born.make_children(current_layer+1, nodes_per_layer_map, inLayer_offset)
         #copy the connections from the first child(from [0]) to each child
         for i in range(1, len(self.children) ):
             self.children[i].children = first_born.children[:]
