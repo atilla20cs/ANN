@@ -1,7 +1,7 @@
 import random
 import string
 """
-atilla koksal - simple ANN with weights using Cary Jardin's pseudo code
+atilla k - simple ANN with weights using Cary Jardin's pseudo code
 """
 NODE_COUNT_PER_LAYER = [4, 3, 2]
 #NODE_CHR = 'A'
